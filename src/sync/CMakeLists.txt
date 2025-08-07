@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(sync CXX)
 
 find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+find_package(miniocpp REQUIRED)
 
 add_library(sync MODULE
     sync.cpp
@@ -15,6 +16,7 @@ target_include_directories(sync PRIVATE
 )
 
 target_link_libraries(sync PRIVATE ${Python3_LIBRARIES})
+target_link_libraries(sync PRIVATE miniocpp::miniocpp)
 
 set_target_properties(sync PROPERTIES
     PREFIX ""

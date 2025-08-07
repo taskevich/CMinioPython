@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(cminiopy CXX)
 
 find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+find_package(miniocpp REQUIRED)
 
 add_library(cminiopy MODULE
     main.cpp
@@ -14,6 +15,7 @@ target_include_directories(cminiopy PRIVATE
 )
 
 target_link_libraries(cminiopy PRIVATE ${Python3_LIBRARIES})
+target_link_libraries(cminiopy PRIVATE miniocpp::miniocpp)
 
 set_target_properties(cminiopy PROPERTIES
     PREFIX ""

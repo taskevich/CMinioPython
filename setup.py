@@ -29,6 +29,7 @@ class CMakeBuild(build_ext):
         build_temp.mkdir(parents=True, exist_ok=True)
 
         cmake_args = [
+            f"-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}",
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{cfg.upper()}={extdir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
