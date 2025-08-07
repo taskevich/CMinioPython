@@ -1,12 +1,6 @@
-#include "minio_api.h"
+#include <Python.h>
 
 PyMethodDef funcs[] = {
-    {
-        "connect",
-        (PyCFunction)connect,
-        METH_VARARGS,
-        "Read file", 
-    },
     {
         NULL, NULL, 0, NULL
     }
@@ -15,7 +9,7 @@ PyMethodDef funcs[] = {
 PyModuleDef cminiopy_module = {
     PyModuleDef_HEAD_INIT,
     "cminiopy",
-    "cminiopy module",
+    "CMinioPy - Minio client written on C",
     -1,
     funcs,
     NULL,
@@ -24,7 +18,6 @@ PyModuleDef cminiopy_module = {
     NULL
 };
 
-PyMODINIT_FUNC PyInit_cminiopy(void)
-{
+PyMODINIT_FUNC PyInit_cminiopy(void) {
     return PyModule_Create(&cminiopy_module);
 }

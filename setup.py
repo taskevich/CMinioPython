@@ -10,6 +10,7 @@ class CMakeExtension(Extension):
         super().__init__(name, sources=[])
         self.sourcedir = os.path.abspath(sourcedir)
 
+
 class CMakeBuild(build_ext):
     def run(self):
         try:
@@ -19,9 +20,12 @@ class CMakeBuild(build_ext):
         super().run()
 
     def build_extension(self, ext):
-        extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
+        ext_fullpath = Path(self.get_ext_fullpath(ext.name))
+        extdir = ext_fullpath.parent.resolve()
+
         cfg = 'Release'
-        build_temp = Path(self.build_temp)
+
+        build_temp = Path(self.build_temp) / ext.name.replace('.', '_')
         build_temp.mkdir(parents=True, exist_ok=True)
 
         cmake_args = [
@@ -34,13 +38,15 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_temp)
         subprocess.check_call(['cmake', '--build', '.', '--config', cfg], cwd=build_temp)
 
+
 setup(
     name='cminiopy',
     version='0.1.0',
     author='Vadim Task',
     description='Python bindings for C++ MinIO API',
     ext_modules=[
-        CMakeExtension('cminiopy', sourcedir='src')
+        CMakeExtension('cminiopy', sourcedir='src'),
+        CMakeExtension('cminiopy.sync', sourcedir='src/sync'),
     ],
     extra_compile_args=["-O3"],
     cmdclass={'build_ext': CMakeBuild},

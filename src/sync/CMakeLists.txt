@@ -1,21 +1,22 @@
 cmake_minimum_required(VERSION 3.10)
-project(cminiopy CXX)
+project(sync CXX)
 
 find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
 
-add_library(cminiopy MODULE
-    main.cpp
-    minio_api.cpp
+add_library(sync MODULE
+    sync.cpp
+    ../minio_api.cpp
 )
 
-target_include_directories(cminiopy PRIVATE
+target_include_directories(sync PRIVATE
     ${Python3_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/src
 )
 
-target_link_libraries(cminiopy PRIVATE ${Python3_LIBRARIES})
+target_link_libraries(sync PRIVATE ${Python3_LIBRARIES})
 
-set_target_properties(cminiopy PROPERTIES
+set_target_properties(sync PROPERTIES
     PREFIX ""
     SUFFIX ".pyd"
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/cminiopy

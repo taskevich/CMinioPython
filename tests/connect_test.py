@@ -1,2 +1,2 @@
 import cminiopy
-print(dir(cminiopy))
+import cminiopy.sync
