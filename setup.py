@@ -43,12 +43,12 @@ setup(
     name='cminiopy',
     version='0.1.0',
     author='Vadim Task',
-    description='Python bindings for C++ MinIO API',
+    packages=['cminiopy'],
+    package_dir={'cminiopy': 'cminiopy'},  # Указывает на папку
     ext_modules=[
-        CMakeExtension('cminiopy', sourcedir='src'),
+        CMakeExtension('cminiopy._core', sourcedir='src'),
         CMakeExtension('cminiopy.sync', sourcedir='src/sync'),
     ],
-    extra_compile_args=["-O3"],
     cmdclass={'build_ext': CMakeBuild},
     zip_safe=False,
 )
